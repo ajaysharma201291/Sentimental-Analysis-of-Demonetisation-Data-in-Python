@@ -1,0 +1,45 @@
+---
+title: "PracticumDC"
+output: html_document
+---
+
+Preprocessing of excel files loaded.
+
+```{Demonetisation}
+getwd()
+
+growth_data<-read.csv("/Users/swapnilvermani/Downloads/Macreconmic Factors.csv")
+growth_data<-t(growth_data)
+
+write.csv(growth_data,"/Users/swapnilvermani/Downloads/MacreconmicFactorsCleaned.csv")
+payments_data<-read.csv("/Users/swapnilvermani/Downloads/ELECT07022016_A.csv",stringsAsFactors = FALSE)
+
+
+payments_data_standardized<-payments_data[2:18,1:21]
+payments_data_standardized<-rbind(payments_data_standardized,payments_data[48,1:21])
+payments_data_standardized[18,1]<-"Feb-18"
+payments_data_standardized
+payments_data_standardized[1,4]
+for(i in 2:ncol(payments_data_standardized)){
+  if(i%%2==0){
+    name=payments_data_standardized[1,i]
+    print(name)
+    payments_data_standardized[1,i+1]=name
+  }
+  
+  
+}
+payments_data_standardized[1,]<-paste(payments_data_standardized[1,],payments_data_standardized[2,])
+payments_data_standardized = payments_data_standardized[-2, ] 
+colnames(payments_data_standardized) = payments_data_standardized[1, ] # the first row will be the header
+payments_data_standardized = payments_data_standardized[-1, ]          # removing the first row.
+rownames(payments_data_standardized) = payments_data_standardized[,1 ] # the first row will be the header
+payments_data_standardized = payments_data_standardized[,-1 ]  
+payments_data_standardized
+
+
+write.csv(payments_data_standardized,file = "/Users/swapnilvermani/Downloads/DigitalMeansData.csv")
+
+```
+
+
